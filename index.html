@@ -1097,15 +1097,11 @@
 
   </main>
 
-  <!-- PIE DE PÁGINA CLÍNICO Y ACCESO A CONFIGURACIÓN -->
+  <!-- PIE DE PÁGINA CLÍNICO -->
   <footer class="app-footer">
     <div class="footer-content">
       <p class="copyright">© Altus • Mgtr. Lucía Montes • Psicóloga Clínica & BCBA</p>
       <div class="footer-links">
-        <button type="button" class="btn-config-link" id="openConfigModalBtn">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-          Configuración de Google Sheets
-        </button>
         <button type="button" class="btn-config-link" id="resetDataBtn">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
           Borrar borrador local
@@ -1113,30 +1109,6 @@
       </div>
     </div>
   </footer>
-
-  <!-- MODAL DE CONFIGURACIÓN DE GOOGLE SHEETS -->
-  <div class="config-modal-overlay" id="configModal" style="display: none;">
-    <div class="config-modal-card">
-      <div class="config-modal-header">
-        <h3>Configurar Google Sheets</h3>
-        <button type="button" class="btn-close-modal" id="closeConfigModalBtn">&times;</button>
-      </div>
-      <div class="config-modal-body">
-        <p>Ingresa la URL de la aplicación web de Google Apps Script (obtenida al implementar el archivo <code>google_sheets_script.gs</code>):</p>
-        <div class="field-group" style="margin: 15px 0;">
-          <label for="scriptUrlInput">URL de la Web App de Apps Script:</label>
-          <input type="url" id="scriptUrlInput" placeholder="https://script.google.com/macros/s/.../exec" class="input-control">
-        </div>
-        <div class="status-indicator" id="endpointStatus">
-          <span>Estado: </span><strong id="statusText">Configuración local</strong>
-        </div>
-        <div class="modal-buttons">
-          <button type="button" class="btn-test-url" id="testScriptUrlBtn">Probar conexión</button>
-          <button type="button" class="btn-save-url" id="saveScriptUrlBtn">Guardar cambios</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <script src="app.js"></script>
 </body>

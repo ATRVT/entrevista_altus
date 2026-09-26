@@ -803,61 +803,85 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // =========================================================================
-  // 8. MODAL DE CONFIGURACIÓN DE GOOGLE SHEETS
+  // 8. MODAL DE CONFIGURACIÓN DE GOOGLE SHEETS (OPCIONAL/DESARROLLO)
   // =========================================================================
-  openConfigModalBtn.addEventListener('click', () => {
-    configModal.style.display = 'flex';
-  });
+  if (openConfigModalBtn) {
+    openConfigModalBtn.addEventListener('click', () => {
+      if (configModal) configModal.style.display = 'flex';
+    });
+  }
 
-  closeConfigModalBtn.addEventListener('click', () => {
-    configModal.style.display = 'none';
-  });
+  if (closeConfigModalBtn) {
+    closeConfigModalBtn.addEventListener('click', () => {
+      if (configModal) configModal.style.display = 'none';
+    });
+  }
 
-  configModal.addEventListener('click', (e) => {
-    if (e.target === configModal) configModal.style.display = 'none';
-  });
+  if (configModal) {
+    configModal.addEventListener('click', (e) => {
+      if (e.target === configModal) configModal.style.display = 'none';
+    });
+  }
 
-  saveScriptUrlBtn.addEventListener('click', () => {
-    const url = scriptUrlInput.value.trim();
-    if (url) {
-      localStorage.setItem(STORAGE_KEY_SCRIPT, url);
-      statusText.textContent = "URL guardada con éxito ✅";
-      statusText.style.color = "#10b981";
-      setTimeout(() => {
-        configModal.style.display = 'none';
-      }, 900);
-    } else {
-      localStorage.removeItem(STORAGE_KEY_SCRIPT);
-      statusText.textContent = "Modo demostración (sin Google Sheets)";
-      statusText.style.color = "#64748b";
-    }
-  });
-
-  testScriptUrlBtn.addEventListener('click', async () => {
-    const url = scriptUrlInput.value.trim();
-    if (!url) {
-      statusText.textContent = "Por favor ingresa una URL válida primero";
-      statusText.style.color = "var(--color-red)";
-      return;
-    }
-    statusText.textContent = "Probando conexión con Google Sheets...";
-    statusText.style.color = "var(--color-primary)";
-
-    try {
-      const res = await fetch(url);
-      const data = await res.json();
-      if (data && data.status === "online") {
-        statusText.textContent = "¡Conexión exitosa! El servicio de Google Sheets respondió correctamente.";
-        statusText.style.color = "#10b981";
+  if (saveScriptUrlBtn && scriptUrlInput) {
+    saveScriptUrlBtn.addEventListener('click', () => {
+      const url = scriptUrlInput.value.trim();
+      if (url) {
+        localStorage.setItem(STORAGE_KEY_SCRIPT, url);
+        if (statusText) {
+          statusText.textContent = "URL guardada con éxito ✅";
+          statusText.style.color = "#10b981";
+        }
+        setTimeout(() => {
+          if (configModal) configModal.style.display = 'none';
+        }, 900);
       } else {
-        statusText.textContent = "Se recibió respuesta de Google Apps Script.";
-        statusText.style.color = "#10b981";
+        localStorage.removeItem(STORAGE_KEY_SCRIPT);
+        if (statusText) {
+          statusText.textContent = "Modo demostración (sin Google Sheets)";
+          statusText.style.color = "#64748b";
+        }
       }
-    } catch (e) {
-      statusText.textContent = "Conexión enviada (en Apps Script los bloqueos de navegador cruzados son normales, pero el POST funciona).";
-      statusText.style.color = "#b45309";
-    }
-  });
+    });
+  }
+
+  if (testScriptUrlBtn && scriptUrlInput) {
+    testScriptUrlBtn.addEventListener('click', async () => {
+      const url = scriptUrlInput.value.trim();
+      if (!url) {
+        if (statusText) {
+          statusText.textContent = "Por favor ingresa una URL válida primero";
+          statusText.style.color = "var(--color-red)";
+        }
+        return;
+      }
+      if (statusText) {
+        statusText.textContent = "Probando conexión con Google Sheets...";
+        statusText.style.color = "var(--color-primary)";
+      }
+
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        if (data && data.status === "online") {
+          if (statusText) {
+            statusText.textContent = "¡Conexión exitosa! El servicio de Google Sheets respondió correctamente.";
+            statusText.style.color = "#10b981";
+          }
+        } else {
+          if (statusText) {
+            statusText.textContent = "Se recibió respuesta de Google Apps Script.";
+            statusText.style.color = "#10b981";
+          }
+        }
+      } catch (e) {
+        if (statusText) {
+          statusText.textContent = "Conexión enviada (en Apps Script los bloqueos de navegador cruzados son normales, pero el POST funciona).";
+          statusText.style.color = "#b45309";
+        }
+      }
+    });
+  }
 
   resetDataBtn.addEventListener('click', () => {
     if (confirm("¿Estás seguro de que deseas borrar el borrador local? Se limpiarán todas las respuestas escritas.")) {
