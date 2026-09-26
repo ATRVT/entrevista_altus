@@ -48,7 +48,7 @@
   <div class="drawer-overlay" id="drawerOverlay"></div>
   <aside class="sections-drawer" id="sectionsDrawer">
     <div class="drawer-header">
-      <h3>Índice de la Anamnesis</h3>
+      <h3>Índice de la Entrevista</h3>
       <button type="button" class="btn-close-drawer" id="closeDrawerBtn" aria-label="Cerrar índice">&times;</button>
     </div>
     <p class="drawer-subtitle">Puedes tocar cualquier sección para revisar o completar preguntas:</p>
@@ -153,14 +153,95 @@
               <input type="text" id="childName" name="childName" placeholder="Nombres y apellidos completos" required class="input-control">
             </div>
 
-            <div class="field-group">
-              <label for="childDob">Fecha de nacimiento <span class="req">*</span></label>
-              <input type="date" id="childDob" name="childDob" required class="input-control">
+            <div class="field-group full-width">
+              <label>Fecha de nacimiento <span class="req">*</span></label>
+              <div class="dob-picker-group" id="dobPickerGroup">
+                <select id="dobDay" class="input-control select-dob" aria-label="Día">
+                  <option value="">Día</option>
+                  <option value="01">1</option>
+                  <option value="02">2</option>
+                  <option value="03">3</option>
+                  <option value="04">4</option>
+                  <option value="05">5</option>
+                  <option value="06">6</option>
+                  <option value="07">7</option>
+                  <option value="08">8</option>
+                  <option value="09">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                  <option value="21">21</option>
+                  <option value="22">22</option>
+                  <option value="23">23</option>
+                  <option value="24">24</option>
+                  <option value="25">25</option>
+                  <option value="26">26</option>
+                  <option value="27">27</option>
+                  <option value="28">28</option>
+                  <option value="29">29</option>
+                  <option value="30">30</option>
+                  <option value="31">31</option>
+                </select>
+                <select id="dobMonth" class="input-control select-dob" aria-label="Mes">
+                  <option value="">Mes</option>
+                  <option value="01">Enero</option>
+                  <option value="02">Febrero</option>
+                  <option value="03">Marzo</option>
+                  <option value="04">Abril</option>
+                  <option value="05">Mayo</option>
+                  <option value="06">Junio</option>
+                  <option value="07">Julio</option>
+                  <option value="08">Agosto</option>
+                  <option value="09">Septiembre</option>
+                  <option value="10">Octubre</option>
+                  <option value="11">Noviembre</option>
+                  <option value="12">Diciembre</option>
+                </select>
+                <select id="dobYear" class="input-control select-dob" aria-label="Año">
+                  <option value="">Año</option>
+                  <option value="2026">2026</option>
+                  <option value="2025">2025</option>
+                  <option value="2024">2024</option>
+                  <option value="2023">2023</option>
+                  <option value="2022">2022</option>
+                  <option value="2021">2021</option>
+                  <option value="2020">2020</option>
+                  <option value="2019">2019</option>
+                  <option value="2018">2018</option>
+                  <option value="2017">2017</option>
+                  <option value="2016">2016</option>
+                  <option value="2015">2015</option>
+                  <option value="2014">2014</option>
+                  <option value="2013">2013</option>
+                  <option value="2012">2012</option>
+                  <option value="2011">2011</option>
+                  <option value="2010">2010</option>
+                  <option value="2009">2009</option>
+                  <option value="2008">2008</option>
+                  <option value="2007">2007</option>
+                  <option value="2006">2006</option>
+                  <option value="2005">2005</option>
+                  <option value="2004">2004</option>
+                  <option value="2003">2003</option>
+                  <option value="2002">2002</option>
+                  <option value="2001">2001</option>
+                  <option value="2000">2000</option>
+                </select>
+              </div>
+              <input type="hidden" id="childDob" name="childDob" required>
             </div>
 
-            <div class="field-group">
+            <div class="field-group full-width">
               <label for="childAge">Edad actual <span class="req">*</span></label>
-              <input type="text" id="childAge" name="childAge" placeholder="Ej: 4 años 3 meses" required class="input-control">
+              <input type="text" id="childAge" name="childAge" placeholder="Se calcula automáticamente al elegir fecha" required class="input-control">
             </div>
 
             <div class="field-group full-width">
@@ -1009,7 +1090,7 @@
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#385da9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
               </div>
               <div class="commitment-text">
-                <p>Certifico que la información provista en esta anamnesis es verídica y completa a mi leal saber y entender. Esta información será tratada con confidencialidad profesional por la <strong>Mgtr. Lucía Montes (BCBA #1-21-51278)</strong> y el equipo clínico de Altus.</p>
+                <p>Certifico que la información provista en este formulario es verídica y completa a mi leal saber y entender. Esta información será tratada con confidencialidad profesional por la <strong>Mgtr. Lucía Montes (BCBA #1-21-51278)</strong> y el equipo clínico de Altus.</p>
               </div>
             </div>
           </div>
@@ -1030,7 +1111,7 @@
 
         <button type="submit" class="btn-nav btn-submit" id="submitBtn" style="display: none;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          <span>Enviar Anamnesis a la Clínica</span>
+          <span>Enviar Entrevista a la Clínica</span>
         </button>
       </footer>
 
@@ -1042,7 +1123,7 @@
         <div class="success-icon-badge">
           <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
         </div>
-        <h2 class="success-title">¡Anamnesis Enviada con Éxito!</h2>
+        <h2 class="success-title">Entrevista enviada</h2>
         <p class="success-msg">Hemos recibido toda la información de manera segura y confidencial en nuestra base de datos clínica.</p>
         
         <div class="success-summary-box">
@@ -1061,11 +1142,11 @@
         </div>
 
         <div class="success-reassurance">
-          <p>Nos pondremos en contacto con ustedes para coordinar la siguiente sesión y dar inicio al plan de evaluación e intervención. Si requieren una copia física de esta anamnesis, con gusto se las entregaremos en su próxima entrevista presencial.</p>
+          <p>Nos pondremos en contacto con ustedes para coordinar la siguiente sesión y dar inicio al plan de evaluación e intervención. Si requieren una copia física de esta entrevista, con gusto se las entregaremos en su próxima cita presencial.</p>
         </div>
 
         <div class="success-actions">
-          <button type="button" class="btn-new-form" id="newFormBtn">Llenar otra anamnesis</button>
+          <button type="button" class="btn-new-form" id="newFormBtn">Llenar otra entrevista</button>
         </div>
       </div>
     </div>

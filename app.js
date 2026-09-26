@@ -274,6 +274,14 @@ document.addEventListener('DOMContentLoaded', () => {
         requiredInputs.forEach(input => {
           if (input.type !== 'radio' && !input.value.trim()) {
             input.classList.add('error');
+            if (input.id === 'childDob') {
+              const d = document.getElementById('dobDay');
+              const m = document.getElementById('dobMonth');
+              const y = document.getElementById('dobYear');
+              if (d && !d.value) d.classList.add('error');
+              if (m && !m.value) m.classList.add('error');
+              if (y && !y.value) y.classList.add('error');
+            }
           }
         });
       }
@@ -286,7 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const listMissing = incompleteSteps.map(s => `• Sección ${s}: ${stepTitles[s - 1]}`).join('\n');
-      alert(`⚠️ Para enviar la anamnesis a la clínica, el formulario debe estar completamente lleno.\n\nFaltan datos obligatorios en:\n${listMissing}\n\nTe hemos llevado a la Sección ${firstIncompleteStep} para completarlos.`);
+      alert(`⚠️ Para enviar la entrevista a la clínica, el formulario debe estar completamente lleno.\n\nFaltan datos obligatorios en:\n${listMissing}\n\nTe hemos llevado a la Sección ${firstIncompleteStep} para completarlos.`);
       return false;
     }
 
@@ -357,16 +365,39 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Cálculo automático de edad según fecha de nacimiento
+  // Manejo de fecha de nacimiento con Día / Mes / Año y cálculo automático de edad
   function initAgeCalculator() {
+    const dobDay = document.getElementById('dobDay');
+    const dobMonth = document.getElementById('dobMonth');
+    const dobYear = document.getElementById('dobYear');
     const dobInput = document.getElementById('childDob');
     const ageInput = document.getElementById('childAge');
 
     if (!dobInput || !ageInput) return;
 
-    dobInput.addEventListener('change', () => {
+    function syncDobAndCalcAge() {
+      if (dobDay && dobMonth && dobYear) {
+        const d = dobDay.value;
+        const m = dobMonth.value;
+        const y = dobYear.value;
+
+        if (d && m && y) {
+          dobInput.value = `${y}-${m}-${d}`;
+          dobInput.classList.remove('error');
+          dobDay.classList.remove('error');
+          dobMonth.classList.remove('error');
+          dobYear.classList.remove('error');
+        } else {
+          dobInput.value = '';
+          return;
+        }
+      }
+
       if (!dobInput.value) return;
-      const birth = new Date(dobInput.value);
+      const parts = dobInput.value.split('-');
+      if (parts.length !== 3) return;
+
+      const birth = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
       const today = new Date();
 
       let years = today.getFullYear() - birth.getFullYear();
@@ -389,7 +420,12 @@ document.addEventListener('DOMContentLoaded', () => {
           ageInput.value = `${years} ${years === 1 ? 'año' : 'años'} y ${months} ${months === 1 ? 'mes' : 'meses'}`;
         }
       }
-    });
+    }
+
+    if (dobDay) dobDay.addEventListener('change', syncDobAndCalcAge);
+    if (dobMonth) dobMonth.addEventListener('change', syncDobAndCalcAge);
+    if (dobYear) dobYear.addEventListener('change', syncDobAndCalcAge);
+    dobInput.addEventListener('change', syncDobAndCalcAge);
   }
 
   // =========================================================================
@@ -555,8 +591,25 @@ document.addEventListener('DOMContentLoaded', () => {
         const el = form.querySelector(`[name="${key}"]`);
         if (el && value !== undefined && value !== null) {
           el.value = value;
+          if (key === 'childDob' && value && value.includes('-')) {
+            const parts = value.split('-');
+            if (parts.length === 3) {
+              const yEl = document.getElementById('dobYear');
+              const mEl = document.getElementById('dobMonth');
+              const dEl = document.getElementById('dobDay');
+              if (yEl) yEl.value = parts[0];
+              if (mEl) mEl.value = parts[1];
+              if (dEl) dEl.value = parts[2];
+            }
+          }
         }
       });
+
+      // Disparar cálculo de edad si se restauró fecha de nacimiento
+      const restoredDob = document.getElementById('childDob');
+      if (restoredDob && restoredDob.value) {
+        restoredDob.dispatchEvent(new Event('change'));
+      }
 
       // Disparar eventos de campos condicionales
       const pretermChecked = form.querySelector('input[name="gestationTime"]:checked');
@@ -678,8 +731,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   newFormBtn.addEventListener('click', () => {
-    if (confirm("¿Deseas iniciar una nueva anamnesis en blanco?")) {
+    if (confirm("¿Deseas iniciar una nueva entrevista en blanco?")) {
       form.reset();
+      const d = document.getElementById('dobDay');
+      const m = document.getElementById('dobMonth');
+      const y = document.getElementById('dobYear');
+      if (d) d.value = '';
+      if (m) m.value = '';
+      if (y) y.value = '';
       clearSignature();
       localStorage.removeItem(STORAGE_KEY_FORM);
       successScreen.style.display = 'none';
