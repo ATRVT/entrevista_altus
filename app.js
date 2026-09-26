@@ -365,7 +365,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Manejo de fecha de nacimiento con Día / Mes / Año y cálculo automático de edad
+  // Manejo de fecha de nacimiento con números directos (DD / MM / AAAA) y cálculo automático de edad
   function initAgeCalculator() {
     const dobDay = document.getElementById('dobDay');
     const dobMonth = document.getElementById('dobMonth');
@@ -373,58 +373,112 @@ document.addEventListener('DOMContentLoaded', () => {
     const dobInput = document.getElementById('childDob');
     const ageInput = document.getElementById('childAge');
 
-    if (!dobInput || !ageInput) return;
+    if (!dobInput || !ageInput || !dobDay || !dobMonth || !dobYear) return;
+
+    // Solo números y salto automático entre casillas al escribir en celular
+    dobDay.addEventListener('input', () => {
+      dobDay.value = dobDay.value.replace(/[^0-9]/g, '');
+      if (dobDay.value.length === 2) {
+        let val = parseInt(dobDay.value, 10);
+        if (val > 31) dobDay.value = '31';
+        if (val === 0) dobDay.value = '01';
+        dobMonth.focus();
+      }
+      syncDobAndCalcAge();
+    });
+
+    dobMonth.addEventListener('input', () => {
+      dobMonth.value = dobMonth.value.replace(/[^0-9]/g, '');
+      if (dobMonth.value.length === 2) {
+        let val = parseInt(dobMonth.value, 10);
+        if (val > 12) dobMonth.value = '12';
+        if (val === 0) dobMonth.value = '01';
+        dobYear.focus();
+      }
+      syncDobAndCalcAge();
+    });
+
+    dobYear.addEventListener('input', () => {
+      dobYear.value = dobYear.value.replace(/[^0-9]/g, '');
+      syncDobAndCalcAge();
+    });
+
+    // Salto hacia atrás con tecla borrar
+    dobMonth.addEventListener('keydown', (e) => {
+      if (e.key === 'Backspace' && !dobMonth.value) {
+        dobDay.focus();
+      }
+    });
+
+    dobYear.addEventListener('keydown', (e) => {
+      if (e.key === 'Backspace' && !dobYear.value) {
+        dobMonth.focus();
+      }
+    });
+
+    // Formatear con cero a la izquierda al salir de la casilla
+    dobDay.addEventListener('blur', () => {
+      if (dobDay.value && dobDay.value.length === 1) {
+        dobDay.value = '0' + dobDay.value;
+      }
+      syncDobAndCalcAge();
+    });
+
+    dobMonth.addEventListener('blur', () => {
+      if (dobMonth.value && dobMonth.value.length === 1) {
+        dobMonth.value = '0' + dobMonth.value;
+      }
+      syncDobAndCalcAge();
+    });
 
     function syncDobAndCalcAge() {
-      if (dobDay && dobMonth && dobYear) {
-        const d = dobDay.value;
-        const m = dobMonth.value;
-        const y = dobYear.value;
+      const d = dobDay.value.trim();
+      const m = dobMonth.value.trim();
+      const y = dobYear.value.trim();
 
-        if (d && m && y) {
-          dobInput.value = `${y}-${m}-${d}`;
-          dobInput.classList.remove('error');
-          dobDay.classList.remove('error');
-          dobMonth.classList.remove('error');
-          dobYear.classList.remove('error');
-        } else {
-          dobInput.value = '';
-          return;
+      if (d && m && y && y.length === 4) {
+        const dPadded = d.padStart(2, '0');
+        const mPadded = m.padStart(2, '0');
+        dobInput.value = `${y}-${mPadded}-${dPadded}`;
+        dobInput.classList.remove('error');
+        dobDay.classList.remove('error');
+        dobMonth.classList.remove('error');
+        dobYear.classList.remove('error');
+
+        const dayNum = parseInt(dPadded, 10);
+        const monthNum = parseInt(mPadded, 10);
+        const yearNum = parseInt(y, 10);
+
+        if (dayNum >= 1 && dayNum <= 31 && monthNum >= 1 && monthNum <= 12 && yearNum >= 1990 && yearNum <= 2030) {
+          const birth = new Date(yearNum, monthNum - 1, dayNum);
+          const today = new Date();
+
+          let years = today.getFullYear() - birth.getFullYear();
+          let months = today.getMonth() - birth.getMonth();
+
+          if (today.getDate() < birth.getDate()) {
+            months--;
+          }
+          if (months < 0) {
+            years--;
+            months += 12;
+          }
+
+          if (years >= 0 && months >= 0) {
+            if (years === 0) {
+              ageInput.value = `${months} ${months === 1 ? 'mes' : 'meses'}`;
+            } else if (months === 0) {
+              ageInput.value = `${years} ${years === 1 ? 'año' : 'años'}`;
+            } else {
+              ageInput.value = `${years} ${years === 1 ? 'año' : 'años'} y ${months} ${months === 1 ? 'mes' : 'meses'}`;
+            }
+          }
         }
-      }
-
-      if (!dobInput.value) return;
-      const parts = dobInput.value.split('-');
-      if (parts.length !== 3) return;
-
-      const birth = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
-      const today = new Date();
-
-      let years = today.getFullYear() - birth.getFullYear();
-      let months = today.getMonth() - birth.getMonth();
-
-      if (today.getDate() < birth.getDate()) {
-        months--;
-      }
-      if (months < 0) {
-        years--;
-        months += 12;
-      }
-
-      if (years >= 0 && months >= 0) {
-        if (years === 0) {
-          ageInput.value = `${months} ${months === 1 ? 'mes' : 'meses'}`;
-        } else if (months === 0) {
-          ageInput.value = `${years} ${years === 1 ? 'año' : 'años'}`;
-        } else {
-          ageInput.value = `${years} ${years === 1 ? 'año' : 'años'} y ${months} ${months === 1 ? 'mes' : 'meses'}`;
-        }
+      } else {
+        dobInput.value = '';
       }
     }
 
-    if (dobDay) dobDay.addEventListener('change', syncDobAndCalcAge);
-    if (dobMonth) dobMonth.addEventListener('change', syncDobAndCalcAge);
-    if (dobYear) dobYear.addEventListener('change', syncDobAndCalcAge);
     dobInput.addEventListener('change', syncDobAndCalcAge);
   }
 
