@@ -713,6 +713,35 @@ input[type=number] {
   background-color: var(--color-red-light);
 }
 
+.radio-pill-group.error,
+.toilet-grid .radio-pill-group.error {
+  border: 1.5px solid var(--color-red) !important;
+  border-radius: var(--radius-md);
+  padding: 4px;
+  background-color: var(--color-red-light);
+}
+
+.signature-canvas-wrapper.error {
+  border-color: var(--color-red) !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25) !important;
+}
+
+/* Cajas condicionales con animación fluida */
+.conditional-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-left: 3px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  margin-top: 10px;
+  animation: fadeInBox 0.22s ease-in-out;
+}
+
+@keyframes fadeInBox {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* ==========================================================================
    BOTONES PILL / CHIPS PARA OPCIONES DE TOQUE RÁPIDO
    ========================================================================== */

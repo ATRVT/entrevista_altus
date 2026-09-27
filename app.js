@@ -200,15 +200,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const stepEl = document.querySelector(`.form-step[data-step="${stepNumber}"]`);
     if (!stepEl) return { isComplete: true, missingFields: [] };
 
+    // Sincronizar condicionales antes de chequear
+    updateConditionals();
+
     const missingFields = [];
-    const requiredInputs = stepEl.querySelectorAll('[required]');
+    const requiredInputs = stepEl.querySelectorAll('input[required], select[required], textarea[required]');
+    const processedRadioNames = new Set();
 
     requiredInputs.forEach(input => {
       if (input.type === 'radio') {
         const name = input.name;
-        const checked = stepEl.querySelector(`input[name="${name}"]:checked`);
-        if (!checked) {
-          missingFields.push(input);
+        if (!processedRadioNames.has(name)) {
+          processedRadioNames.add(name);
+          const checked = stepEl.querySelector(`input[name="${name}"]:checked`);
+          if (!checked) {
+            missingFields.push(input);
+          }
+        }
+      } else if (input.id === 'childDob') {
+        const d = document.getElementById('dobDay');
+        const m = document.getElementById('dobMonth');
+        const y = document.getElementById('dobYear');
+        if (!input.value.trim() || !d || !d.value.trim() || !m || !m.value.trim() || !y || y.value.trim().length < 4) {
+          missingFields.push(d || input);
         }
       } else {
         if (!input.value.trim()) {
@@ -217,8 +231,34 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    if (stepNumber === 11 && !hasSigned) {
-      missingFields.push(canvas);
+    // Validación especial para Paso 2 (Padres y Tutores)
+    // Se requiere que al menos un padre/tutor tenga datos completos de contacto
+    if (stepNumber === 2) {
+      const fatherName = document.getElementById('fatherName');
+      const fatherPhone = document.getElementById('fatherPhone');
+      const motherName = document.getElementById('motherName');
+      const motherPhone = document.getElementById('motherPhone');
+
+      const hasFather = fatherName && fatherName.value.trim().length > 0;
+      const hasMother = motherName && motherName.value.trim().length > 0;
+
+      if (!hasFather && !hasMother) {
+        if (motherName) missingFields.push(motherName);
+      } else {
+        if (hasFather && fatherPhone && !fatherPhone.value.trim()) {
+          missingFields.push(fatherPhone);
+        }
+        if (hasMother && motherPhone && !motherPhone.value.trim()) {
+          missingFields.push(motherPhone);
+        }
+      }
+    }
+
+    // Validación especial para Paso 11 (Firma digital táctil)
+    if (stepNumber === 11) {
+      if (!hasSigned) {
+        missingFields.push(canvas);
+      }
     }
 
     return {
@@ -253,6 +293,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let firstMissingInput = null;
     const incompleteSteps = [];
 
+    // Limpiar errores previos
+    document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+
     for (let i = 1; i <= TOTAL_STEPS; i++) {
       const { isComplete, missingFields } = checkStepCompletion(i);
       if (!isComplete) {
@@ -267,34 +310,44 @@ document.addEventListener('DOMContentLoaded', () => {
     if (incompleteSteps.length > 0) {
       goToStep(firstIncompleteStep);
 
-      // Resaltar en rojo los campos vacíos en ese paso
-      const stepEl = document.querySelector(`.form-step[data-step="${firstIncompleteStep}"]`);
-      if (stepEl) {
-        const requiredInputs = stepEl.querySelectorAll('[required]');
-        requiredInputs.forEach(input => {
-          if (input.type !== 'radio' && !input.value.trim()) {
-            input.classList.add('error');
-            if (input.id === 'childDob') {
-              const d = document.getElementById('dobDay');
-              const m = document.getElementById('dobMonth');
-              const y = document.getElementById('dobYear');
-              if (d && !d.value) d.classList.add('error');
-              if (m && !m.value) m.classList.add('error');
-              if (y && !y.value) y.classList.add('error');
-            }
-          }
-        });
-      }
+      // Resaltar en rojo los campos faltantes en el paso al que se le lleva
+      const { missingFields } = checkStepCompletion(firstIncompleteStep);
+      missingFields.forEach(field => {
+        if (field === canvas) {
+          const wrapper = document.querySelector('.signature-canvas-wrapper');
+          if (wrapper) wrapper.classList.add('error');
+        } else if (field.type === 'radio') {
+          const pillGroup = field.closest('.radio-pill-group');
+          if (pillGroup) pillGroup.classList.add('error');
+        } else if (field.id === 'dobDay' || field.id === 'childDob') {
+          const d = document.getElementById('dobDay');
+          const m = document.getElementById('dobMonth');
+          const y = document.getElementById('dobYear');
+          if (d && !d.value.trim()) d.classList.add('error');
+          if (m && !m.value.trim()) m.classList.add('error');
+          if (y && y.value.trim().length < 4) y.classList.add('error');
+        } else {
+          field.classList.add('error');
+        }
+      });
 
       if (firstMissingInput) {
         setTimeout(() => {
-          firstMissingInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          if (typeof firstMissingInput.focus === 'function') firstMissingInput.focus();
-        }, 200);
+          let scrollTarget = firstMissingInput;
+          if (firstMissingInput === canvas) {
+            scrollTarget = document.querySelector('.signature-box') || canvas;
+          } else if (firstMissingInput.type === 'radio') {
+            scrollTarget = firstMissingInput.closest('.field-group') || firstMissingInput.closest('.sensory-item-card') || firstMissingInput;
+          }
+          scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          if (typeof firstMissingInput.focus === 'function' && firstMissingInput !== canvas && firstMissingInput.type !== 'radio') {
+            firstMissingInput.focus();
+          }
+        }, 220);
       }
 
       const listMissing = incompleteSteps.map(s => `• Sección ${s}: ${stepTitles[s - 1]}`).join('\n');
-      alert(`⚠️ Para enviar la entrevista a la clínica, el formulario debe estar completamente lleno.\n\nFaltan datos obligatorios en:\n${listMissing}\n\nTe hemos llevado a la Sección ${firstIncompleteStep} para completarlos.`);
+      alert(`⚠️ Para enviar la entrevista a la clínica, debes responder todas las preguntas obligatorias.\n\nFaltan respuestas en:\n${listMissing}\n\nTe hemos llevado a la Sección ${firstIncompleteStep} para completarlas.`);
       return false;
     }
 
@@ -338,17 +391,94 @@ document.addEventListener('DOMContentLoaded', () => {
   // =========================================================================
   // 4. CAMPOS CONDICIONALES Y CÁLCULOS
   // =========================================================================
-  function initConditionalFields() {
-    // Gestación prematura
-    const gestationRadios = document.querySelectorAll('input[name="gestationTime"]');
+  function updateConditionals() {
+    // 1. Alergias
+    const allergiesVal = (document.querySelector('input[name="allergies"]:checked') || {}).value;
+    const allergiesDetailBox = document.getElementById('allergiesDetailBox');
+    const allergiesDetailInput = document.getElementById('allergiesDetail');
+    if (allergiesDetailBox && allergiesDetailInput) {
+      if (allergiesVal === 'Sí, tiene alergias') {
+        allergiesDetailBox.style.display = 'block';
+        allergiesDetailInput.required = true;
+      } else {
+        allergiesDetailBox.style.display = 'none';
+        allergiesDetailInput.required = false;
+        allergiesDetailInput.classList.remove('error');
+      }
+    }
+
+    // 2. Mascota (perro)
+    const hasDogVal = (document.querySelector('input[name="hasDog"]:checked') || {}).value;
+    const dogInteractionBox = document.getElementById('dogInteractionBox');
+    const dogInteractionInput = document.getElementById('dogInteraction');
+    if (dogInteractionBox && dogInteractionInput) {
+      if (hasDogVal === 'Sí') {
+        dogInteractionBox.style.display = 'block';
+        dogInteractionInput.required = true;
+      } else {
+        dogInteractionBox.style.display = 'none';
+        dogInteractionInput.required = false;
+        dogInteractionInput.classList.remove('error');
+      }
+    }
+
+    // 3. Situación laboral padre
+    const fatherWorksVal = (document.querySelector('input[name="fatherWorks"]:checked') || {}).value;
+    const fatherWorkplaceBox = document.getElementById('fatherWorkplaceBox');
+    const fatherWorkplaceInput = document.getElementById('fatherWorkplace');
+    if (fatherWorkplaceBox && fatherWorkplaceInput) {
+      if (fatherWorksVal === 'Sí trabaja') {
+        fatherWorkplaceBox.style.display = 'block';
+        fatherWorkplaceInput.required = true;
+      } else {
+        fatherWorkplaceBox.style.display = 'none';
+        fatherWorkplaceInput.required = false;
+        fatherWorkplaceInput.classList.remove('error');
+      }
+    }
+
+    // 4. Situación laboral madre
+    const motherWorksVal = (document.querySelector('input[name="motherWorks"]:checked') || {}).value;
+    const motherWorkplaceBox = document.getElementById('motherWorkplaceBox');
+    const motherWorkplaceInput = document.getElementById('motherWorkplace');
+    if (motherWorkplaceBox && motherWorkplaceInput) {
+      if (motherWorksVal === 'Sí trabaja') {
+        motherWorkplaceBox.style.display = 'block';
+        motherWorkplaceInput.required = true;
+      } else {
+        motherWorkplaceBox.style.display = 'none';
+        motherWorkplaceInput.required = false;
+        motherWorkplaceInput.classList.remove('error');
+      }
+    }
+
+    // 5. Gestación prematura
+    const gestationVal = (document.querySelector('input[name="gestationTime"]:checked') || {}).value;
     const pretermWeeksBox = document.getElementById('pretermWeeksBox');
-    gestationRadios.forEach(radio => {
-      radio.addEventListener('change', () => {
-        if (radio.value === 'Prematuro' && radio.checked) {
-          pretermWeeksBox.style.display = 'block';
-        } else if (radio.checked) {
-          pretermWeeksBox.style.display = 'none';
-        }
+    const pretermWeeksInput = document.getElementById('pretermWeeks');
+    if (pretermWeeksBox && pretermWeeksInput) {
+      if (gestationVal === 'Prematuro') {
+        pretermWeeksBox.style.display = 'block';
+        pretermWeeksInput.required = true;
+      } else {
+        pretermWeeksBox.style.display = 'none';
+        pretermWeeksInput.required = false;
+        pretermWeeksInput.classList.remove('error');
+      }
+    }
+  }
+
+  function initConditionalFields() {
+    // Escuchar cambios en todos los radios condicionales
+    const conditionalRadioNames = ['allergies', 'hasDog', 'fatherWorks', 'motherWorks', 'gestationTime'];
+    conditionalRadioNames.forEach(name => {
+      const radios = document.querySelectorAll(`input[name="${name}"]`);
+      radios.forEach(radio => {
+        radio.addEventListener('change', () => {
+          updateConditionals();
+          debounceSaveDraft();
+          updateDrawerStatus();
+        });
       });
     });
 
@@ -360,9 +490,23 @@ document.addEventListener('DOMContentLoaded', () => {
       debounceSaveDraft();
     });
 
-    form.addEventListener('change', () => {
+    form.addEventListener('change', (e) => {
+      if (e.target.type === 'radio') {
+        const group = e.target.closest('.radio-pill-group');
+        if (group && group.classList.contains('error')) {
+          group.classList.remove('error');
+        }
+      }
+      if (e.target.classList.contains('error')) {
+        e.target.classList.remove('error');
+      }
+      updateConditionals();
       debounceSaveDraft();
+      updateDrawerStatus();
     });
+
+    // Ejecución inicial
+    updateConditionals();
   }
 
   // Manejo de fecha de nacimiento con números directos (DD / MM / AAAA) y cálculo automático de edad
@@ -562,6 +706,8 @@ document.addEventListener('DOMContentLoaded', () => {
     isDrawing = true;
     hasSigned = true;
     canvasIndicator.classList.add('hidden');
+    const wrapper = document.querySelector('.signature-canvas-wrapper');
+    if (wrapper) wrapper.classList.remove('error');
     const { x, y } = getCanvasCoords(e);
     ctx.beginPath();
     ctx.moveTo(x, y);
@@ -665,12 +811,8 @@ document.addEventListener('DOMContentLoaded', () => {
         restoredDob.dispatchEvent(new Event('change'));
       }
 
-      // Disparar eventos de campos condicionales
-      const pretermChecked = form.querySelector('input[name="gestationTime"]:checked');
-      if (pretermChecked && pretermChecked.value === 'Prematuro') {
-        const box = document.getElementById('pretermWeeksBox');
-        if (box) box.style.display = 'block';
-      }
+      // Sincronizar todos los campos condicionales con los datos restaurados
+      updateConditionals();
 
       showAutosaveNotice("Borrador anterior restaurado con éxito");
     } catch (err) {

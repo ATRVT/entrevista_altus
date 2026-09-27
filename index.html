@@ -195,8 +195,8 @@
             </div>
 
             <div class="field-group full-width">
-              <label for="childAddress">Dirección domiciliar</label>
-              <input type="text" id="childAddress" name="childAddress" placeholder="Zona, municipio o dirección completa" class="input-control">
+              <label for="childAddress">Dirección domiciliar <span class="req">*</span></label>
+              <input type="text" id="childAddress" name="childAddress" placeholder="Zona, municipio o dirección completa" required class="input-control">
             </div>
 
             <div class="field-group">
@@ -206,44 +206,43 @@
 
             <div class="field-group">
               <label for="referredBy">Referido por</label>
-              <input type="text" id="referredBy" name="referredBy" placeholder="Nombre de médico, colegio o referencia" class="input-control">
+              <input type="text" id="referredBy" name="referredBy" placeholder="Nombre de médico, colegio o referencia (o 'Ninguno')" class="input-control">
             </div>
 
             <div class="field-group full-width">
-              <label>Alergias conocidas</label>
+              <label>Alergias conocidas <span class="req">*</span></label>
               <div class="radio-pill-group">
                 <label class="radio-pill">
-                  <input type="radio" name="allergies" value="Ninguna" checked>
+                  <input type="radio" name="allergies" value="Ninguna" checked required>
                   <span class="pill-text">Ninguna conocida</span>
                 </label>
                 <label class="radio-pill">
-                  <input type="radio" name="allergies" value="Sí, tiene alergias">
+                  <input type="radio" name="allergies" value="Sí, tiene alergias" required>
                   <span class="pill-text">Sí, tiene alergias</span>
                 </label>
               </div>
-              <div class="allergies-box" style="margin-top:10px;">
-                <label for="allergiesDetail" style="font-size:0.8rem; color:var(--color-text-muted);">Descripción o detalle de alergias:</label>
-                <textarea id="allergiesDetail" name="allergiesDetail" rows="2" placeholder="Detalla medicamentos, alimentos o alérgenos ambientales conocidos (o escribir 'Ninguna')" class="input-control"></textarea>
+              <div class="conditional-box" id="allergiesDetailBox" style="display:none;">
+                <label for="allergiesDetail" style="font-size:0.84rem; font-weight:600; color:#334155;">Descripción o detalle de alergias: <span class="req">*</span></label>
+                <textarea id="allergiesDetail" name="allergiesDetail" rows="2" placeholder="Detalla medicamentos, alimentos o alérgenos ambientales conocidos" class="input-control"></textarea>
               </div>
             </div>
 
             <div class="field-group full-width">
-              <label>Mascota en casa (perro)</label>
+              <label>Mascota en casa (perro) <span class="req">*</span></label>
               <div class="radio-pill-group">
                 <label class="radio-pill">
-                  <input type="radio" name="hasDog" value="Sí">
+                  <input type="radio" name="hasDog" value="Sí" required>
                   <span class="pill-text">Sí tiene perro</span>
                 </label>
                 <label class="radio-pill">
-                  <input type="radio" name="hasDog" value="No" checked>
+                  <input type="radio" name="hasDog" value="No" checked required>
                   <span class="pill-text">No tiene perro</span>
                 </label>
               </div>
-            </div>
-
-            <div class="field-group full-width">
-              <label for="dogInteraction">Relación e interacción con el perro</label>
-              <textarea id="dogInteraction" name="dogInteraction" rows="2" placeholder="Describir afinidad, tolerancia, apego o temores observados con perros o mascotas" class="input-control"></textarea>
+              <div class="conditional-box" id="dogInteractionBox" style="display:none;">
+                <label for="dogInteraction" style="font-size:0.84rem; font-weight:600; color:#334155;">Relación e interacción con el perro: <span class="req">*</span></label>
+                <textarea id="dogInteraction" name="dogInteraction" rows="2" placeholder="Describir afinidad, tolerancia, apego o temores observados con perros o mascotas" class="input-control"></textarea>
+              </div>
             </div>
           </div>
         </div>
@@ -294,8 +293,8 @@
                   </label>
                 </div>
               </div>
-              <div class="field-group full-width">
-                <label for="fatherWorkplace">¿Dónde trabaja? (Lugar / Empresa / Actividad)</label>
+              <div class="field-group full-width conditional-box" id="fatherWorkplaceBox" style="display:none;">
+                <label for="fatherWorkplace" style="font-size:0.84rem; font-weight:600; color:#334155;">¿Dónde trabaja el padre? (Lugar / Empresa / Actividad) <span class="req">*</span></label>
                 <input type="text" id="fatherWorkplace" name="fatherWorkplace" placeholder="Nombre de empresa, comercio o indicar si es independiente" class="input-control">
               </div>
               <div class="field-group full-width">
@@ -338,8 +337,8 @@
                   </label>
                 </div>
               </div>
-              <div class="field-group full-width">
-                <label for="motherWorkplace">¿Dónde trabaja? (Lugar / Empresa / Actividad)</label>
+              <div class="field-group full-width conditional-box" id="motherWorkplaceBox" style="display:none;">
+                <label for="motherWorkplace" style="font-size:0.84rem; font-weight:600; color:#334155;">¿Dónde trabaja la madre? (Lugar / Empresa / Actividad) <span class="req">*</span></label>
                 <input type="text" id="motherWorkplace" name="motherWorkplace" placeholder="Nombre de empresa, comercio o indicar si es independiente" class="input-control">
               </div>
               <div class="field-group full-width">
@@ -354,18 +353,18 @@
             <h3 class="sub-title"><span class="badge-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></span> Situación Familiar y Vivienda</h3>
             <div class="field-grid">
               <div class="field-group full-width">
-                <label for="mainFamilyOccupation">Ocupación familiar principal</label>
-                <input type="text" id="mainFamilyOccupation" name="mainFamilyOccupation" placeholder="Detallar actividad principal o ingresos del hogar" class="input-control">
+                <label for="mainFamilyOccupation">Ocupación familiar principal <span class="req">*</span></label>
+                <input type="text" id="mainFamilyOccupation" name="mainFamilyOccupation" required placeholder="Detallar actividad principal o ingresos del hogar" class="input-control">
               </div>
 
               <div class="field-group full-width">
-                <label for="homeDescription">Descripción de la vivienda</label>
-                <textarea id="homeDescription" name="homeDescription" rows="2" placeholder="Número de habitaciones, condiciones del espacio, personas que conviven en el hogar" class="input-control"></textarea>
+                <label for="homeDescription">Descripción de la vivienda <span class="req">*</span></label>
+                <textarea id="homeDescription" name="homeDescription" rows="2" required placeholder="Número de habitaciones, condiciones del espacio, personas que conviven en el hogar" class="input-control"></textarea>
               </div>
 
               <div class="field-group full-width">
-                <label for="siblingsInfo">Hermanos</label>
-                <textarea id="siblingsInfo" name="siblingsInfo" rows="2" placeholder="Nombres, edades y tipo de relación con el niño/a (o indicar 'Hijo único')" class="input-control"></textarea>
+                <label for="siblingsInfo">Hermanos <span class="req">*</span></label>
+                <textarea id="siblingsInfo" name="siblingsInfo" rows="2" required placeholder="Nombres, edades y tipo de relación con el niño/a (o indicar 'Hijo único')" class="input-control"></textarea>
               </div>
             </div>
           </div>
@@ -396,8 +395,8 @@
             </div>
 
             <div class="field-group">
-              <label for="previousDiagnosis">Diagnóstico previo y año</label>
-              <input type="text" id="previousDiagnosis" name="previousDiagnosis" placeholder="Ej: TEA (2023) o 'Ninguno'" class="input-control">
+              <label for="previousDiagnosis">Diagnóstico previo y año <span class="req">*</span></label>
+              <input type="text" id="previousDiagnosis" name="previousDiagnosis" required placeholder="Ej: TEA (2023) o 'Ninguno'" class="input-control">
             </div>
 
             <div class="field-group">
@@ -406,18 +405,18 @@
             </div>
 
             <div class="field-group full-width">
-              <label for="firstSymptomsAge">Inicio de los primeros síntomas</label>
-              <input type="text" id="firstSymptomsAge" name="firstSymptomsAge" placeholder="Edad en que se identificaron las primeras señales de alerta" class="input-control">
+              <label for="firstSymptomsAge">Inicio de los primeros síntomas <span class="req">*</span></label>
+              <input type="text" id="firstSymptomsAge" name="firstSymptomsAge" required placeholder="Edad en que se identificaron las primeras señales de alerta" class="input-control">
             </div>
 
             <div class="field-group full-width">
-              <label for="previousEvaluations">Evaluaciones y tratamientos previos</label>
-              <textarea id="previousEvaluations" name="previousEvaluations" rows="2" placeholder="Terapias anteriores (lenguaje, ocupacional, ABA), estudios neurológicos o intervenciones recibidas" class="input-control"></textarea>
+              <label for="previousEvaluations">Evaluaciones y tratamientos previos <span class="req">*</span></label>
+              <textarea id="previousEvaluations" name="previousEvaluations" rows="2" required placeholder="Terapias anteriores (lenguaje, ocupacional, ABA), estudios neurológicos o indicar 'Ninguno'" class="input-control"></textarea>
             </div>
 
             <div class="field-group full-width">
-              <label for="familyAttitude">Actitud familiar ante el problema</label>
-              <textarea id="familyAttitude" name="familyAttitude" rows="2" placeholder="Nivel de aceptación, acuerdos de crianza, red de apoyo o estrés familiar" class="input-control"></textarea>
+              <label for="familyAttitude">Actitud familiar ante el problema <span class="req">*</span></label>
+              <textarea id="familyAttitude" name="familyAttitude" rows="2" required placeholder="Nivel de aceptación, acuerdos de crianza, red de apoyo o estrés familiar" class="input-control"></textarea>
             </div>
           </div>
         </div>
@@ -440,30 +439,31 @@
             <h3 class="sub-title"><span class="badge-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg></span> Gestación y Parto</h3>
             <div class="field-grid">
               <div class="field-group full-width">
-                <label>Tiempo de gestación</label>
+                <label>Tiempo de gestación <span class="req">*</span></label>
                 <div class="radio-pill-group">
                   <label class="radio-pill">
-                    <input type="radio" name="gestationTime" value="A término (9 meses)" checked>
+                    <input type="radio" name="gestationTime" value="A término (9 meses)" checked required>
                     <span class="pill-text">A término (9 meses / 38-40 sem)</span>
                   </label>
                   <label class="radio-pill">
-                    <input type="radio" name="gestationTime" value="Prematuro">
+                    <input type="radio" name="gestationTime" value="Prematuro" required>
                     <span class="pill-text">Prematuro</span>
                   </label>
                 </div>
                 <div class="conditional-box" id="pretermWeeksBox" style="display:none; margin-top:10px;">
+                  <label for="pretermWeeks" style="font-size:0.84rem; font-weight:600; color:#334155;">Semanas de gestación al nacer: <span class="req">*</span></label>
                   <input type="text" id="pretermWeeks" name="pretermWeeks" placeholder="¿A cuántas semanas nació? (Ej: 34 semanas)" class="input-control">
                 </div>
               </div>
 
               <div class="field-group full-width">
-                <label for="pregnancyComplications">Complicaciones en embarazo</label>
-                <input type="text" id="pregnancyComplications" name="pregnancyComplications" placeholder="Ninguna o detallar (preeclampsia, amenazas de aborto, etc.)" class="input-control">
+                <label for="pregnancyComplications">Complicaciones en embarazo <span class="req">*</span></label>
+                <input type="text" id="pregnancyComplications" name="pregnancyComplications" required placeholder="Ninguna o detallar (preeclampsia, amenazas de aborto, etc.)" class="input-control">
               </div>
 
               <div class="field-group full-width">
-                <label for="birthDelivery">Parto y nacimiento</label>
-                <textarea id="birthDelivery" name="birthDelivery" rows="2" placeholder="Parto vaginal / cesárea, llanto inmediato, uso de incubadora o complicaciones neonatales" class="input-control"></textarea>
+                <label for="birthDelivery">Parto y nacimiento <span class="req">*</span></label>
+                <textarea id="birthDelivery" name="birthDelivery" rows="2" required placeholder="Parto vaginal / cesárea, llanto inmediato, uso de incubadora o complicaciones neonatales" class="input-control"></textarea>
               </div>
             </div>
           </div>
@@ -474,28 +474,28 @@
             <p class="field-hint">Anota la edad aproximada en meses en que logró cada hito:</p>
             <div class="field-grid-3">
               <div class="field-group">
-                <label for="motorHeadControl">Control cefálico</label>
-                <input type="text" id="motorHeadControl" name="motorHeadControl" inputmode="numeric" placeholder="Ej: 3 meses" class="input-control">
+                <label for="motorHeadControl">Control cefálico <span class="req">*</span></label>
+                <input type="text" id="motorHeadControl" name="motorHeadControl" required inputmode="numeric" placeholder="Ej: 3 meses" class="input-control">
               </div>
               <div class="field-group">
-                <label for="motorCrawling">Gateo</label>
-                <input type="text" id="motorCrawling" name="motorCrawling" inputmode="numeric" placeholder="Ej: 8 meses" class="input-control">
+                <label for="motorCrawling">Gateo <span class="req">*</span></label>
+                <input type="text" id="motorCrawling" name="motorCrawling" required inputmode="numeric" placeholder="Ej: 8 meses" class="input-control">
               </div>
               <div class="field-group">
-                <label for="motorWalking">Marcha (caminar)</label>
-                <input type="text" id="motorWalking" name="motorWalking" inputmode="numeric" placeholder="Ej: 12 meses" class="input-control">
+                <label for="motorWalking">Marcha (caminar) <span class="req">*</span></label>
+                <input type="text" id="motorWalking" name="motorWalking" required inputmode="numeric" placeholder="Ej: 12 meses" class="input-control">
               </div>
               <div class="field-group">
-                <label for="langPointing">Señalamiento</label>
-                <input type="text" id="langPointing" name="langPointing" inputmode="numeric" placeholder="Ej: 10 meses" class="input-control">
+                <label for="langPointing">Señalamiento <span class="req">*</span></label>
+                <input type="text" id="langPointing" name="langPointing" required inputmode="numeric" placeholder="Ej: 10 meses" class="input-control">
               </div>
               <div class="field-group">
-                <label for="langSyllables">Primeras sílabas</label>
-                <input type="text" id="langSyllables" name="langSyllables" inputmode="numeric" placeholder="Ej: 9 meses" class="input-control">
+                <label for="langSyllables">Primeras sílabas <span class="req">*</span></label>
+                <input type="text" id="langSyllables" name="langSyllables" required inputmode="numeric" placeholder="Ej: 9 meses" class="input-control">
               </div>
               <div class="field-group">
-                <label for="langWords">Primeras palabras</label>
-                <input type="text" id="langWords" name="langWords" inputmode="numeric" placeholder="Ej: 14 meses" class="input-control">
+                <label for="langWords">Primeras palabras <span class="req">*</span></label>
+                <input type="text" id="langWords" name="langWords" required inputmode="numeric" placeholder="Ej: 14 meses" class="input-control">
               </div>
             </div>
             <div class="field-group full-width" style="margin-top: 14px;">
@@ -509,59 +509,59 @@
             <h3 class="sub-title"><span class="badge-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></span> Alimentación, Sueño y Esfínteres</h3>
             <div class="field-grid">
               <div class="field-group full-width">
-                <label for="feedingStart">Inicio de alimentación sólida</label>
-                <input type="text" id="feedingStart" name="feedingStart" placeholder="Edad, transición de texturas, masticación o dificultades iniciales" class="input-control">
+                <label for="feedingStart">Inicio de alimentación sólida <span class="req">*</span></label>
+                <input type="text" id="feedingStart" name="feedingStart" required placeholder="Edad, transición de texturas, masticación o dificultades iniciales" class="input-control">
               </div>
 
               <div class="field-group">
-                <label>Sueño continuo nocturno</label>
+                <label>Sueño continuo nocturno <span class="req">*</span></label>
                 <div class="radio-pill-group">
                   <label class="radio-pill">
-                    <input type="radio" name="sleepContinuous" value="Sí">
+                    <input type="radio" name="sleepContinuous" value="Sí" required>
                     <span class="pill-text">Sí continuo</span>
                   </label>
                   <label class="radio-pill">
-                    <input type="radio" name="sleepContinuous" value="No">
+                    <input type="radio" name="sleepContinuous" value="No" required>
                     <span class="pill-text">No continuo</span>
                   </label>
                 </div>
               </div>
 
               <div class="field-group">
-                <label for="sleepQuality">Calidad del sueño</label>
-                <input type="text" id="sleepQuality" name="sleepQuality" placeholder="Despertares, pesadillas, horarios, resistencia" class="input-control">
+                <label for="sleepQuality">Calidad del sueño <span class="req">*</span></label>
+                <input type="text" id="sleepQuality" name="sleepQuality" required placeholder="Despertares, pesadillas, horarios, resistencia" class="input-control">
               </div>
 
               <div class="field-group full-width">
-                <label for="dentalHealth">Dentición y salud bucal</label>
-                <input type="text" id="dentalHealth" name="dentalHealth" placeholder="Erupción adecuada, bruxismo (rechina dientes), caries o dientes ausentes" class="input-control">
+                <label for="dentalHealth">Dentición y salud bucal <span class="req">*</span></label>
+                <input type="text" id="dentalHealth" name="dentalHealth" required placeholder="Erupción adecuada, bruxismo (rechina dientes), caries o dientes ausentes" class="input-control">
               </div>
 
               <div class="field-group full-width">
-                <label>Control de esfínteres</label>
+                <label>Control de esfínteres <span class="req">*</span></label>
                 <div class="toilet-grid">
                   <div class="toilet-item">
-                    <span class="toilet-label">Pipí de día:</span>
+                    <span class="toilet-label">Pipí de día: <span class="req">*</span></span>
                     <div class="radio-pill-group compact">
-                      <label class="radio-pill"><input type="radio" name="toiletDay" value="Sí"><span class="pill-text">Sí</span></label>
-                      <label class="radio-pill"><input type="radio" name="toiletDay" value="En proceso"><span class="pill-text">En proceso</span></label>
-                      <label class="radio-pill"><input type="radio" name="toiletDay" value="No"><span class="pill-text">No</span></label>
+                      <label class="radio-pill"><input type="radio" name="toiletDay" value="Sí" required><span class="pill-text">Sí</span></label>
+                      <label class="radio-pill"><input type="radio" name="toiletDay" value="En proceso" required><span class="pill-text">En proceso</span></label>
+                      <label class="radio-pill"><input type="radio" name="toiletDay" value="No" required><span class="pill-text">No</span></label>
                     </div>
                   </div>
                   <div class="toilet-item">
-                    <span class="toilet-label">Pipí de noche:</span>
+                    <span class="toilet-label">Pipí de noche: <span class="req">*</span></span>
                     <div class="radio-pill-group compact">
-                      <label class="radio-pill"><input type="radio" name="toiletNight" value="Sí"><span class="pill-text">Sí</span></label>
-                      <label class="radio-pill"><input type="radio" name="toiletNight" value="En proceso"><span class="pill-text">En proceso</span></label>
-                      <label class="radio-pill"><input type="radio" name="toiletNight" value="No"><span class="pill-text">No</span></label>
+                      <label class="radio-pill"><input type="radio" name="toiletNight" value="Sí" required><span class="pill-text">Sí</span></label>
+                      <label class="radio-pill"><input type="radio" name="toiletNight" value="En proceso" required><span class="pill-text">En proceso</span></label>
+                      <label class="radio-pill"><input type="radio" name="toiletNight" value="No" required><span class="pill-text">No</span></label>
                     </div>
                   </div>
                   <div class="toilet-item">
-                    <span class="toilet-label">Popó:</span>
+                    <span class="toilet-label">Popó: <span class="req">*</span></span>
                     <div class="radio-pill-group compact">
-                      <label class="radio-pill"><input type="radio" name="toiletPoop" value="Sí"><span class="pill-text">Sí</span></label>
-                      <label class="radio-pill"><input type="radio" name="toiletPoop" value="En proceso"><span class="pill-text">En proceso</span></label>
-                      <label class="radio-pill"><input type="radio" name="toiletPoop" value="No"><span class="pill-text">No</span></label>
+                      <label class="radio-pill"><input type="radio" name="toiletPoop" value="Sí" required><span class="pill-text">Sí</span></label>
+                      <label class="radio-pill"><input type="radio" name="toiletPoop" value="En proceso" required><span class="pill-text">En proceso</span></label>
+                      <label class="radio-pill"><input type="radio" name="toiletPoop" value="No" required><span class="pill-text">No</span></label>
                     </div>
                   </div>
                 </div>
@@ -590,33 +590,33 @@
 
           <div class="field-grid">
             <div class="field-group full-width">
-              <label for="habitualMood">Estado de ánimo y humor habitual</label>
-              <input type="text" id="habitualMood" name="habitualMood" placeholder="Ej: Alegre, reactivo, irritable, ansioso, calmado..." class="input-control">
+              <label for="habitualMood">Estado de ánimo y humor habitual <span class="req">*</span></label>
+              <input type="text" id="habitualMood" name="habitualMood" required placeholder="Ej: Alegre, reactivo, irritable, ansioso, calmado..." class="input-control">
             </div>
 
             <div class="field-group full-width">
-              <label for="adaptationNew">Adaptación a lugares y personas nuevas</label>
-              <textarea id="adaptationNew" name="adaptationNew" rows="2" placeholder="Comportamiento ante cambios de ambiente, visitas o personas desconocidas" class="input-control"></textarea>
+              <label for="adaptationNew">Adaptación a lugares y personas nuevas <span class="req">*</span></label>
+              <textarea id="adaptationNew" name="adaptationNew" rows="2" required placeholder="Comportamiento ante cambios de ambiente, visitas o personas desconocidas" class="input-control"></textarea>
             </div>
 
             <div class="field-group full-width">
-              <label for="tantrums">Rabietas o berrinches</label>
-              <textarea id="tantrums" name="tantrums" rows="3" placeholder="Frecuencia, detonantes comunes, intensidad y estrategias que ayudan a calmarle" class="input-control"></textarea>
+              <label for="tantrums">Rabietas o berrinches <span class="req">*</span></label>
+              <textarea id="tantrums" name="tantrums" rows="3" required placeholder="Frecuencia, detonantes comunes, intensidad y estrategias que ayudan a calmarle" class="input-control"></textarea>
             </div>
 
             <div class="field-group">
-              <label for="currentSchool">Colegio o centro infantil actual</label>
-              <input type="text" id="currentSchool" name="currentSchool" placeholder="Nombre del centro escolar" class="input-control">
+              <label for="currentSchool">Colegio o centro infantil actual <span class="req">*</span></label>
+              <input type="text" id="currentSchool" name="currentSchool" required placeholder="Nombre del centro escolar (o 'No asiste')" class="input-control">
             </div>
 
             <div class="field-group">
-              <label for="currentGrade">Grado en curso</label>
-              <input type="text" id="currentGrade" name="currentGrade" placeholder="Grado, maternal, kínder o preparatoria" class="input-control">
+              <label for="currentGrade">Grado en curso <span class="req">*</span></label>
+              <input type="text" id="currentGrade" name="currentGrade" required placeholder="Grado, maternal, kínder o 'Ninguno'" class="input-control">
             </div>
 
             <div class="field-group full-width">
-              <label for="schoolNotes">Particularidades en la escuela</label>
-              <textarea id="schoolNotes" name="schoolNotes" rows="2" placeholder="Relación con docentes y compañeros, seguimiento de rutinas escolares o reportes recibidos" class="input-control"></textarea>
+              <label for="schoolNotes">Particularidades en la escuela <span class="req">*</span></label>
+              <textarea id="schoolNotes" name="schoolNotes" rows="2" required placeholder="Relación con docentes y compañeros, seguimiento de rutinas (o 'Sin observaciones')" class="input-control"></textarea>
             </div>
           </div>
         </div>
@@ -636,18 +636,18 @@
 
           <div class="field-grid">
             <div class="field-group full-width">
-              <label for="hospitalizations">Hospitalizaciones o cirugías previas</label>
-              <input type="text" id="hospitalizations" name="hospitalizations" placeholder="Ninguna o detallar causas y fechas aproximadas" class="input-control">
+              <label for="hospitalizations">Hospitalizaciones o cirugías previas <span class="req">*</span></label>
+              <input type="text" id="hospitalizations" name="hospitalizations" required placeholder="Ninguna o detallar causas y fechas aproximadas" class="input-control">
             </div>
 
             <div class="field-group full-width">
-              <label for="currentMedications">Medicamentos actuales</label>
-              <textarea id="currentMedications" name="currentMedications" rows="2" placeholder="Nombre del fármaco, dosis, horario y propósito (o indicar 'Ninguno')" class="input-control"></textarea>
+              <label for="currentMedications">Medicamentos actuales <span class="req">*</span></label>
+              <textarea id="currentMedications" name="currentMedications" rows="2" required placeholder="Nombre del fármaco, dosis (o indicar 'Ninguno')" class="input-control"></textarea>
             </div>
 
             <div class="field-group full-width">
-              <label for="relevantIllnesses">Enfermedades relevantes</label>
-              <input type="text" id="relevantIllnesses" name="relevantIllnesses" placeholder="Convulsiones, asma, reflujo, infecciones crónicas de oído u otras" class="input-control">
+              <label for="relevantIllnesses">Enfermedades relevantes <span class="req">*</span></label>
+              <input type="text" id="relevantIllnesses" name="relevantIllnesses" required placeholder="Convulsiones, asma, reflujo u otras (o indicar 'Ninguna')" class="input-control">
             </div>
 
             <div class="field-group full-width">
@@ -672,18 +672,18 @@
 
           <div class="field-grid">
             <div class="field-group full-width">
-              <label for="weekdayRoutine">Día entre semana (desde despertar hasta dormir)</label>
-              <textarea id="weekdayRoutine" name="weekdayRoutine" rows="4" placeholder="Describir horarios de despertar, alistado, salida al colegio, almuerzo, tarde, juego, cena y descanso nocturno" class="input-control"></textarea>
+              <label for="weekdayRoutine">Día entre semana (desde despertar hasta dormir) <span class="req">*</span></label>
+              <textarea id="weekdayRoutine" name="weekdayRoutine" rows="4" required placeholder="Describir horarios de despertar, alistado, salida al colegio, almuerzo, tarde, juego, cena y descanso nocturno" class="input-control"></textarea>
             </div>
 
             <div class="field-group full-width">
-              <label for="weekendRoutine">Día de fin de semana</label>
-              <textarea id="weekendRoutine" name="weekendRoutine" rows="3" placeholder="Actividades familiares habituales, visitas, paseos y flexibilización de horarios" class="input-control"></textarea>
+              <label for="weekendRoutine">Día de fin de semana <span class="req">*</span></label>
+              <textarea id="weekendRoutine" name="weekendRoutine" rows="3" required placeholder="Actividades familiares habituales, visitas, paseos y flexibilización de horarios" class="input-control"></textarea>
             </div>
 
             <div class="field-group full-width">
-              <label for="freeTimeActivities">Actividades en tiempo libre en casa</label>
-              <textarea id="freeTimeActivities" name="freeTimeActivities" rows="2" placeholder="Juegos o actividades espontáneas cuando no hay demandas directas ni pantallas" class="input-control"></textarea>
+              <label for="freeTimeActivities">Actividades en tiempo libre en casa <span class="req">*</span></label>
+              <textarea id="freeTimeActivities" name="freeTimeActivities" rows="2" required placeholder="Juegos o actividades espontáneas cuando no hay demandas directas ni pantallas" class="input-control"></textarea>
             </div>
           </div>
         </div>
@@ -706,98 +706,98 @@
             <!-- 1. Lavado o corte de cabello -->
             <div class="sensory-item-card">
               <div class="sensory-header">
-                <strong>1. Lavado o corte de cabello:</strong>
+                <strong>1. Lavado o corte de cabello: <span class="req">*</span></strong>
                 <div class="radio-pill-group compact">
-                  <label class="radio-pill"><input type="radio" name="sensoryHaircut" value="Sí genera molestia"><span class="pill-text">Molestia: Sí</span></label>
-                  <label class="radio-pill"><input type="radio" name="sensoryHaircut" value="No genera molestia"><span class="pill-text">Molestia: No</span></label>
+                  <label class="radio-pill"><input type="radio" name="sensoryHaircut" value="Sí genera molestia" required><span class="pill-text">Molestia: Sí</span></label>
+                  <label class="radio-pill"><input type="radio" name="sensoryHaircut" value="No genera molestia" required><span class="pill-text">Molestia: No</span></label>
                 </div>
               </div>
-              <input type="text" name="sensoryHaircutDetail" placeholder="Detalle de la conducta observada" class="input-control sensory-detail-input">
+              <input type="text" name="sensoryHaircutDetail" placeholder="Detalle de la conducta observada (opcional)" class="input-control sensory-detail-input">
             </div>
 
             <!-- 2. Respuesta al llamado por su nombre -->
             <div class="sensory-item-card">
               <div class="sensory-header">
-                <strong>2. Respuesta al llamado por su nombre:</strong>
+                <strong>2. Respuesta al llamado por su nombre: <span class="req">*</span></strong>
                 <div class="radio-pill-group compact">
-                  <label class="radio-pill"><input type="radio" name="sensoryNameResponse" value="Responde bien"><span class="pill-text">Responde bien</span></label>
-                  <label class="radio-pill"><input type="radio" name="sensoryNameResponse" value="Parece no oír"><span class="pill-text">Parece no oír</span></label>
+                  <label class="radio-pill"><input type="radio" name="sensoryNameResponse" value="Responde bien" required><span class="pill-text">Responde bien</span></label>
+                  <label class="radio-pill"><input type="radio" name="sensoryNameResponse" value="Parece no oír" required><span class="pill-text">Parece no oír</span></label>
                 </div>
               </div>
-              <input type="text" name="sensoryNameResponseDetail" placeholder="Detalle de la conducta observada" class="input-control sensory-detail-input">
+              <input type="text" name="sensoryNameResponseDetail" placeholder="Detalle de la conducta observada (opcional)" class="input-control sensory-detail-input">
             </div>
 
             <!-- 3. Selectividad con la comida -->
             <div class="sensory-item-card">
               <div class="sensory-header">
-                <strong>3. Selectividad con la comida:</strong>
+                <strong>3. Selectividad con la comida: <span class="req">*</span></strong>
                 <div class="radio-pill-group compact">
-                  <label class="radio-pill"><input type="radio" name="sensoryFoodSelectivity" value="Tolerante"><span class="pill-text">Tolerante</span></label>
-                  <label class="radio-pill"><input type="radio" name="sensoryFoodSelectivity" value="Rechazo por texturas/colores/olores"><span class="pill-text">Rechazo selectivo</span></label>
+                  <label class="radio-pill"><input type="radio" name="sensoryFoodSelectivity" value="Tolerante" required><span class="pill-text">Tolerante</span></label>
+                  <label class="radio-pill"><input type="radio" name="sensoryFoodSelectivity" value="Rechazo por texturas/colores/olores" required><span class="pill-text">Rechazo selectivo</span></label>
                 </div>
               </div>
-              <input type="text" name="sensoryFoodSelectivityDetail" placeholder="Detalle de alimentos o texturas rechazadas" class="input-control sensory-detail-input">
+              <input type="text" name="sensoryFoodSelectivityDetail" placeholder="Detalle de alimentos o texturas rechazadas (opcional)" class="input-control sensory-detail-input">
             </div>
 
             <!-- 4. Prendas de vestir -->
             <div class="sensory-item-card">
               <div class="sensory-header">
-                <strong>4. Prendas de vestir (botones, costuras, etiquetas):</strong>
+                <strong>4. Prendas de vestir (botones, costuras, etiquetas): <span class="req">*</span></strong>
                 <div class="radio-pill-group compact">
-                  <label class="radio-pill"><input type="radio" name="sensoryClothing" value="Tolerante"><span class="pill-text">Tolerante</span></label>
-                  <label class="radio-pill"><input type="radio" name="sensoryClothing" value="Rechazo evidente"><span class="pill-text">Rechazo evidente</span></label>
+                  <label class="radio-pill"><input type="radio" name="sensoryClothing" value="Tolerante" required><span class="pill-text">Tolerante</span></label>
+                  <label class="radio-pill"><input type="radio" name="sensoryClothing" value="Rechazo evidente" required><span class="pill-text">Rechazo evidente</span></label>
                 </div>
               </div>
-              <input type="text" name="sensoryClothingDetail" placeholder="Detalle de etiquetas, telas o calzado" class="input-control sensory-detail-input">
+              <input type="text" name="sensoryClothingDetail" placeholder="Detalle de etiquetas, telas o calzado (opcional)" class="input-control sensory-detail-input">
             </div>
 
             <!-- 5. Percepción del dolor -->
             <div class="sensory-item-card">
               <div class="sensory-header">
-                <strong>5. Percepción del dolor ante caídas o golpes:</strong>
+                <strong>5. Percepción del dolor ante caídas o golpes: <span class="req">*</span></strong>
                 <div class="radio-pill-group compact">
-                  <label class="radio-pill"><input type="radio" name="sensoryPain" value="Típica"><span class="pill-text">Típica</span></label>
-                  <label class="radio-pill"><input type="radio" name="sensoryPain" value="Hiporreactivo (apenas reacciona)"><span class="pill-text">Apenas reacciona</span></label>
-                  <label class="radio-pill"><input type="radio" name="sensoryPain" value="Hiperreactivo (muy sensible)"><span class="pill-text">Muy sensible</span></label>
+                  <label class="radio-pill"><input type="radio" name="sensoryPain" value="Típica" required><span class="pill-text">Típica</span></label>
+                  <label class="radio-pill"><input type="radio" name="sensoryPain" value="Hiporreactivo (apenas reacciona)" required><span class="pill-text">Apenas reacciona</span></label>
+                  <label class="radio-pill"><input type="radio" name="sensoryPain" value="Hiperreactivo (muy sensible)" required><span class="pill-text">Muy sensible</span></label>
                 </div>
               </div>
-              <input type="text" name="sensoryPainDetail" placeholder="Detalle de la reacción" class="input-control sensory-detail-input">
+              <input type="text" name="sensoryPainDetail" placeholder="Detalle de la reacción (opcional)" class="input-control sensory-detail-input">
             </div>
 
             <!-- 6. Habilidades motoras y equilibrio -->
             <div class="sensory-item-card">
               <div class="sensory-header">
-                <strong>6. Habilidades motoras y equilibrio:</strong>
+                <strong>6. Habilidades motoras y equilibrio: <span class="req">*</span></strong>
                 <div class="radio-pill-group compact">
-                  <label class="radio-pill"><input type="radio" name="sensoryMotorCoordination" value="Adecuado"><span class="pill-text">Adecuado</span></label>
-                  <label class="radio-pill"><input type="radio" name="sensoryMotorCoordination" value="Tropiezos frecuentes / torpeza"><span class="pill-text">Tropiezos frecuentes</span></label>
+                  <label class="radio-pill"><input type="radio" name="sensoryMotorCoordination" value="Adecuado" required><span class="pill-text">Adecuado</span></label>
+                  <label class="radio-pill"><input type="radio" name="sensoryMotorCoordination" value="Tropiezos frecuentes / torpeza" required><span class="pill-text">Tropiezos frecuentes</span></label>
                 </div>
               </div>
-              <input type="text" name="sensoryMotorCoordinationDetail" placeholder="Detalle de coordinación o caídas" class="input-control sensory-detail-input">
+              <input type="text" name="sensoryMotorCoordinationDetail" placeholder="Detalle de coordinación o caídas (opcional)" class="input-control sensory-detail-input">
             </div>
 
             <!-- 7. Sensibilidad ante ruidos fuertes -->
             <div class="sensory-item-card">
               <div class="sensory-header">
-                <strong>7. Sensibilidad ante ruidos fuertes:</strong>
+                <strong>7. Sensibilidad ante ruidos fuertes: <span class="req">*</span></strong>
                 <div class="radio-pill-group compact">
-                  <label class="radio-pill"><input type="radio" name="sensoryLoudSounds" value="Tolera bien"><span class="pill-text">Tolera bien</span></label>
-                  <label class="radio-pill"><input type="radio" name="sensoryLoudSounds" value="Se tapa oídos / llora / se asusta"><span class="pill-text">Se tapa oídos/asusta</span></label>
+                  <label class="radio-pill"><input type="radio" name="sensoryLoudSounds" value="Tolera bien" required><span class="pill-text">Tolera bien</span></label>
+                  <label class="radio-pill"><input type="radio" name="sensoryLoudSounds" value="Se tapa oídos / llora / se asusta" required><span class="pill-text">Se tapa oídos/asusta</span></label>
                 </div>
               </div>
-              <input type="text" name="sensoryLoudSoundsDetail" placeholder="Detalle de ruidos (licuadora, fuegos artificiales, etc.)" class="input-control sensory-detail-input">
+              <input type="text" name="sensoryLoudSoundsDetail" placeholder="Detalle de ruidos (licuadora, etc.) (opcional)" class="input-control sensory-detail-input">
             </div>
 
             <!-- 8. Búsqueda oral -->
             <div class="sensory-item-card">
               <div class="sensory-header">
-                <strong>8. Búsqueda oral (morder objetos, ropa, dedos):</strong>
+                <strong>8. Búsqueda oral (morder objetos, ropa, dedos): <span class="req">*</span></strong>
                 <div class="radio-pill-group compact">
-                  <label class="radio-pill"><input type="radio" name="sensoryOralSeeking" value="No presenta"><span class="pill-text">No presenta</span></label>
-                  <label class="radio-pill"><input type="radio" name="sensoryOralSeeking" value="Frecuente"><span class="pill-text">Frecuente</span></label>
+                  <label class="radio-pill"><input type="radio" name="sensoryOralSeeking" value="No presenta" required><span class="pill-text">No presenta</span></label>
+                  <label class="radio-pill"><input type="radio" name="sensoryOralSeeking" value="Frecuente" required><span class="pill-text">Frecuente</span></label>
                 </div>
               </div>
-              <input type="text" name="sensoryOralSeekingDetail" placeholder="Detalle de lo que suele morder o chuparse" class="input-control sensory-detail-input">
+              <input type="text" name="sensoryOralSeekingDetail" placeholder="Detalle de lo que suele morder o chuparse (opcional)" class="input-control sensory-detail-input">
             </div>
 
           </div>
@@ -818,8 +818,8 @@
 
           <div class="field-grid">
             <div class="field-group full-width">
-              <label for="avdFeeding">Alimentación independiente</label>
-              <select id="avdFeeding" name="avdFeeding" class="input-control">
+              <label for="avdFeeding">Alimentación independiente <span class="req">*</span></label>
+              <select id="avdFeeding" name="avdFeeding" required class="input-control">
                 <option value="">-- Seleccionar nivel --</option>
                 <option value="Come solo con cubiertos sin dificultad">Come solo con cubiertos sin dificultad</option>
                 <option value="Come solo pero se dispersa o requiere recordatorios">Come solo pero se dispersa o requiere recordatorios</option>
@@ -829,8 +829,8 @@
             </div>
 
             <div class="field-group full-width">
-              <label for="avdHygiene">Higiene y baño</label>
-              <select id="avdHygiene" name="avdHygiene" class="input-control">
+              <label for="avdHygiene">Higiene y baño <span class="req">*</span></label>
+              <select id="avdHygiene" name="avdHygiene" required class="input-control">
                 <option value="">-- Seleccionar nivel --</option>
                 <option value="Se baña solo con supervisión mínima">Se baña solo con supervisión mínima</option>
                 <option value="Coopera en el baño pero requiere apoyo activo">Coopera en el baño pero requiere apoyo activo</option>
@@ -840,8 +840,8 @@
             </div>
 
             <div class="field-group full-width">
-              <label for="avdDressing">Vestido y calzado</label>
-              <select id="avdDressing" name="avdDressing" class="input-control">
+              <label for="avdDressing">Vestido y calzado <span class="req">*</span></label>
+              <select id="avdDressing" name="avdDressing" required class="input-control">
                 <option value="">-- Seleccionar nivel --</option>
                 <option value="Se viste y desviste solo (abotona y ata zapatos)">Se viste y desviste solo (abotona y ata zapatos)</option>
                 <option value="Se desviste solo, pero necesita ayuda para vestirse">Se desviste solo, pero necesita ayuda para vestirse</option>
@@ -851,8 +851,8 @@
             </div>
 
             <div class="field-group full-width">
-              <label for="avdToilet">Uso del sanitario</label>
-              <select id="avdToilet" name="avdToilet" class="input-control">
+              <label for="avdToilet">Uso del sanitario <span class="req">*</span></label>
+              <select id="avdToilet" name="avdToilet" required class="input-control">
                 <option value="">-- Seleccionar nivel --</option>
                 <option value="Avisa y va al baño de forma completamente autónoma">Avisa y va al baño de forma completamente autónoma</option>
                 <option value="Requiere apoyo para limpiarse">Requiere apoyo para limpiarse</option>
@@ -862,8 +862,8 @@
             </div>
 
             <div class="field-group full-width">
-              <label for="avdTeeth">Higiene bucal</label>
-              <select id="avdTeeth" name="avdTeeth" class="input-control">
+              <label for="avdTeeth">Higiene bucal <span class="req">*</span></label>
+              <select id="avdTeeth" name="avdTeeth" required class="input-control">
                 <option value="">-- Seleccionar nivel --</option>
                 <option value="Se lava los dientes por iniciativa propia">Se lava los dientes por iniciativa propia</option>
                 <option value="Tolera el cepillado con asistencia del adulto">Tolera el cepillado con asistencia del adulto</option>
@@ -873,8 +873,8 @@
             </div>
 
             <div class="field-group full-width">
-              <label for="avdTidiness">Orden y cuidado personal</label>
-              <select id="avdTidiness" name="avdTidiness" class="input-control">
+              <label for="avdTidiness">Orden y cuidado personal <span class="req">*</span></label>
+              <select id="avdTidiness" name="avdTidiness" required class="input-control">
                 <option value="">-- Seleccionar nivel --</option>
                 <option value="Guarda juguetes y cuida sus pertenencias">Guarda juguetes y cuida sus pertenencias</option>
                 <option value="Recoge juguetes solo si se le acompaña">Recoge juguetes solo si se le acompaña</option>
@@ -884,8 +884,8 @@
             </div>
 
             <div class="field-group full-width">
-              <label for="avdInstructions">Seguimiento de instrucciones</label>
-              <select id="avdInstructions" name="avdInstructions" class="input-control">
+              <label for="avdInstructions">Seguimiento de instrucciones <span class="req">*</span></label>
+              <select id="avdInstructions" name="avdInstructions" required class="input-control">
                 <option value="">-- Seleccionar nivel --</option>
                 <option value="Comprende y ejecuta instrucciones complejas de 2 o más pasos">Comprende y ejecuta instrucciones de 2 o más pasos</option>
                 <option value="Comprende órdenes simples de 1 solo paso">Comprende órdenes simples de 1 solo paso</option>
@@ -917,52 +917,52 @@
           <div class="field-grid">
             <!-- Comidas -->
             <div class="field-group">
-              <label for="interestsFoodsLike">Comidas y alimentos que LE GUSTAN</label>
-              <textarea id="interestsFoodsLike" name="interestsFoodsLike" rows="2" placeholder="Alimentos, snacks o sabores preferidos" class="input-control"></textarea>
+              <label for="interestsFoodsLike">Comidas y alimentos que LE GUSTAN <span class="req">*</span></label>
+              <textarea id="interestsFoodsLike" name="interestsFoodsLike" rows="2" required placeholder="Alimentos, snacks o sabores preferidos" class="input-control"></textarea>
             </div>
             <div class="field-group">
-              <label for="interestsFoodsDislike">Comidas y alimentos que NO LE GUSTAN</label>
-              <textarea id="interestsFoodsDislike" name="interestsFoodsDislike" rows="2" placeholder="Alimentos que rechaza rotundamente" class="input-control"></textarea>
+              <label for="interestsFoodsDislike">Comidas y alimentos que NO LE GUSTAN <span class="req">*</span></label>
+              <textarea id="interestsFoodsDislike" name="interestsFoodsDislike" rows="2" required placeholder="Alimentos que rechaza rotundamente" class="input-control"></textarea>
             </div>
 
             <!-- Bebidas -->
             <div class="field-group">
-              <label for="interestsDrinksLike">Bebidas que LE GUSTAN</label>
-              <input type="text" id="interestsDrinksLike" name="interestsDrinksLike" placeholder="Agua, jugos, leche, sabores preferidos" class="input-control">
+              <label for="interestsDrinksLike">Bebidas que LE GUSTAN <span class="req">*</span></label>
+              <input type="text" id="interestsDrinksLike" name="interestsDrinksLike" required placeholder="Agua, jugos, leche, sabores preferidos" class="input-control">
             </div>
             <div class="field-group">
-              <label for="interestsDrinksDislike">Bebidas que NO LE GUSTAN</label>
-              <input type="text" id="interestsDrinksDislike" name="interestsDrinksDislike" placeholder="Bebidas o temperaturas rechazadas" class="input-control">
+              <label for="interestsDrinksDislike">Bebidas que NO LE GUSTAN <span class="req">*</span></label>
+              <input type="text" id="interestsDrinksDislike" name="interestsDrinksDislike" required placeholder="Bebidas o temperaturas rechazadas" class="input-control">
             </div>
 
             <!-- Personas preferidas -->
             <div class="field-group full-width">
-              <label for="interestsPreferredPeople">Personas preferidas</label>
-              <input type="text" id="interestsPreferredPeople" name="interestsPreferredPeople" placeholder="Personas o familiares con los que interactúa con mayor agrado" class="input-control">
+              <label for="interestsPreferredPeople">Personas preferidas <span class="req">*</span></label>
+              <input type="text" id="interestsPreferredPeople" name="interestsPreferredPeople" required placeholder="Personas o familiares con los que interactúa con mayor agrado" class="input-control">
             </div>
 
             <!-- Juguetes y objetos -->
             <div class="field-group full-width">
-              <label for="interestsFavoriteToys">Juguetes u objetos favoritos</label>
-              <textarea id="interestsFavoriteToys" name="interestsFavoriteToys" rows="2" placeholder="Juguetes, carritos, peluches, bloques, objetos particulares de apego" class="input-control"></textarea>
+              <label for="interestsFavoriteToys">Juguetes u objetos favoritos <span class="req">*</span></label>
+              <textarea id="interestsFavoriteToys" name="interestsFavoriteToys" rows="2" required placeholder="Juguetes, carritos, peluches, bloques, objetos particulares de apego" class="input-control"></textarea>
             </div>
 
             <!-- Juegos concretos -->
             <div class="field-group full-width">
-              <label for="interestsConcreteGames">Juegos concretos</label>
-              <input type="text" id="interestsConcreteGames" name="interestsConcreteGames" placeholder="Juegos físicos, cosquillas, persecución, avioncito, rondas preferidas" class="input-control">
+              <label for="interestsConcreteGames">Juegos concretos <span class="req">*</span></label>
+              <input type="text" id="interestsConcreteGames" name="interestsConcreteGames" required placeholder="Juegos físicos, cosquillas, persecución, avioncito, rondas preferidas" class="input-control">
             </div>
 
             <!-- Contenido multimedia -->
             <div class="field-group full-width">
-              <label for="interestsMultimedia">Contenido multimedia</label>
-              <input type="text" id="interestsMultimedia" name="interestsMultimedia" placeholder="Videos favoritos de YouTube, música, canciones, personajes o videojuegos" class="input-control">
+              <label for="interestsMultimedia">Contenido multimedia <span class="req">*</span></label>
+              <input type="text" id="interestsMultimedia" name="interestsMultimedia" required placeholder="Videos favoritos de YouTube, música, canciones, personajes o videojuegos" class="input-control">
             </div>
 
             <!-- Actividades recreativas -->
             <div class="field-group full-width">
-              <label for="interestsRecreationalActivities">Actividades recreativas</label>
-              <input type="text" id="interestsRecreationalActivities" name="interestsRecreationalActivities" placeholder="Parque, piscina, pintar, plastilina, bicicleta, paseos al aire libre" class="input-control">
+              <label for="interestsRecreationalActivities">Actividades recreativas <span class="req">*</span></label>
+              <input type="text" id="interestsRecreationalActivities" name="interestsRecreationalActivities" required placeholder="Parque, piscina, pintar, plastilina, bicicleta, paseos al aire libre" class="input-control">
             </div>
 
             <!-- Otros intereses -->
